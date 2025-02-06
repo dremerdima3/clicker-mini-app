@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кликер Mini App</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Кликер</h1>
+        <div id="counter">0</div>
+        <button id="clickButton">
+            <img src="apple.png" alt="Кликни меня!" id="clickImage">
+        </button>
+        <div class="energy-bar">
+            <div id="energy"></div>
+        </div>
+        <div id="energy-text">Энергия: <span id="energy-value">300</span>/<span id="max-energy">300</span></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
