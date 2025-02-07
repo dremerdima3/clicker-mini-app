@@ -105,6 +105,7 @@ function saveProgress() {
         upgradeClickPrice: upgradeClickPrice,
         upgradeEnergyPrice: upgradeEnergyPrice,
         upgradeRestorePrice: upgradeRestorePrice
+        energy: energy // Сохраняем текущее значение энергии
     };
     localStorage.setItem('clickerProgress', JSON.stringify(progress));
 }
@@ -123,6 +124,8 @@ function loadProgress() {
         upgradeClickPrice = progress.upgradeClickPrice || 50;
         upgradeEnergyPrice = progress.upgradeEnergyPrice || 50;
         upgradeRestorePrice = progress.upgradeRestorePrice || 50;
+        energy = progress.energy || maxEnergy; // Загружаем сохраненное значение энергии
+
 
         // Обновляем интерфейс
         counterElement.textContent = counter;
