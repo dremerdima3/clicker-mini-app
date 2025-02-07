@@ -22,6 +22,7 @@ let restoreInterval = 1500;
 let upgradeClickPrice = 50;
 let upgradeEnergyPrice = 50;
 let upgradeRestorePrice = 50;
+let restoreIntervalId = setInterval(restoreEnergy, restoreInterval); // Сохраняем ID интервала
 
 const counterElement = document.getElementById('counter');
 const clickButton = document.getElementById('clickButton');
@@ -98,14 +99,16 @@ function saveProgress() {
     const progress = {
         counter: counter,
         clickMultiplier: clickMultiplier,
+        energyCostMultiplier: energyCostMultiplier, // Сохраняем множитель затрат энергии
         maxEnergy: maxEnergy,
-        restoreInterval: restoreInterval,
+        restoreInterval: restoreInterval, // Сохраняем интервал восстановления
         upgradeClickPrice: upgradeClickPrice,
         upgradeEnergyPrice: upgradeEnergyPrice,
         upgradeRestorePrice: upgradeRestorePrice
     };
     localStorage.setItem('clickerProgress', JSON.stringify(progress));
 }
+
 
 // Функция для загрузки данных
 function loadProgress() {
@@ -114,8 +117,9 @@ function loadProgress() {
         const progress = JSON.parse(savedProgress);
         counter = progress.counter || 0;
         clickMultiplier = progress.clickMultiplier || 1;
+        energyCostMultiplier = progress.energyCostMultiplier || 1; // Загружаем множитель затрат энергии
         maxEnergy = progress.maxEnergy || 300;
-        restoreInterval = progress.restoreInterval || 1500;
+        restoreInterval = progress.restoreInterval || 1500; // Загружаем интервал восстановления
         upgradeClickPrice = progress.upgradeClickPrice || 50;
         upgradeEnergyPrice = progress.upgradeEnergyPrice || 50;
         upgradeRestorePrice = progress.upgradeRestorePrice || 50;
@@ -124,6 +128,10 @@ function loadProgress() {
         counterElement.textContent = counter;
         updateEnergy();
         updateUpgradePrices();
+
+        // Перезапускаем интервал восстановления с новым значением
+        clearInterval(restoreIntervalId); // Очищаем старый интервал
+        restoreIntervalId = setInterval(restoreEnergy, restoreInterval); // Запускаем новый интервал
     }
 }
 
@@ -143,7 +151,7 @@ upgradeClickButton.addEventListener('click', () => {
         counter -= upgradeClickPrice;
         counterElement.textContent = counter;
         clickMultiplier *= 2;
-        energyCostMultiplier *= 2;
+        energyCostMultiplier *= 2; // Увеличиваем множитель затрат энергии
         upgradeClickPrice += 50;
         upgradeClickPriceElement.textContent = upgradeClickPrice;
 
@@ -169,9 +177,9 @@ upgradeRestoreButton.addEventListener('click', () => {
     if (counter >= upgradeRestorePrice) {
         counter -= upgradeRestorePrice;
         counterElement.textContent = counter;
-        restoreInterval *= 0.9;
-        clearInterval(restoreInterval);
-        setInterval(restoreEnergy, restoreInterval);
+        restoreInterval *= 0.9; // Уменьшаем интервал восстановления
+        clearInterval(restoreIntervalId); // Очищаем старый интервал
+        restoreIntervalId = setInterval(restoreEnergy, restoreInterval); // Запускаем новый интервал
         upgradeRestorePrice += 50;
         upgradeRestorePriceElement.textContent = upgradeRestorePrice;
 
