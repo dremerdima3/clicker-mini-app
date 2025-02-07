@@ -30,6 +30,9 @@ const energyValueElement = document.getElementById('energy-value');
 const maxEnergyElement = document.getElementById('max-energy');
 
 // Элементы магазина
+const shopButton = document.getElementById('shopButton');
+const shopModal = document.getElementById('shopModal');
+const closeModal = document.querySelector('.close');
 const upgradeClickButton = document.getElementById('upgradeClick');
 const upgradeEnergyButton = document.getElementById('upgradeEnergy');
 const upgradeRestoreButton = document.getElementById('upgradeRestore');
@@ -78,6 +81,16 @@ energyElement.addEventListener('transitionend', () => {
     if (energy > 0) {
         clickButton.disabled = false;
     }
+});
+
+// Открытие модального окна магазина
+shopButton.addEventListener('click', () => {
+    shopModal.style.display = 'flex';
+});
+
+// Закрытие модального окна
+closeModal.addEventListener('click', () => {
+    shopModal.style.display = 'none';
 });
 
 // Функция для сохранения данных
