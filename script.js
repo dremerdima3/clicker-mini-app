@@ -1,7 +1,7 @@
 const tg = window.Telegram.WebApp;
 
 // Инициализация
-tg.expand(); // Развернуть приложение на весь экран
+tg.expand();
 tg.MainButton.show();
 tg.MainButton.setText("Закрыть");
 tg.MainButton.onClick(() => tg.close());
@@ -16,9 +16,9 @@ if (user) {
 let counter = 0;
 let energy = 300;
 let maxEnergy = 300;
-let clickMultiplier = 1; // Множитель очков за клик
-let energyCostMultiplier = 1; // Множитель затрат энергии
-let restoreInterval = 1500; // Интервал восстановления энергии
+let clickMultiplier = 1;
+let energyCostMultiplier = 1;
+let restoreInterval = 1500;
 let upgradeClickPrice = 50;
 let upgradeEnergyPrice = 50;
 let upgradeRestorePrice = 50;
@@ -30,9 +30,6 @@ const energyValueElement = document.getElementById('energy-value');
 const maxEnergyElement = document.getElementById('max-energy');
 
 // Элементы магазина
-const shopButton = document.getElementById('shopButton');
-const shopModal = document.getElementById('shopModal');
-const closeModal = document.querySelector('.close');
 const upgradeClickButton = document.getElementById('upgradeClick');
 const upgradeEnergyButton = document.getElementById('upgradeEnergy');
 const upgradeRestoreButton = document.getElementById('upgradeRestore');
@@ -71,6 +68,8 @@ clickButton.addEventListener('click', () => {
         if (energy === 0) {
             clickButton.disabled = true;
         }
+
+        saveProgress(); // Сохраняем прогресс
     }
 });
 
@@ -81,15 +80,49 @@ energyElement.addEventListener('transitionend', () => {
     }
 });
 
-// Открытие модального окна магазина
-shopButton.addEventListener('click', () => {
-    shopModal.style.display = 'flex';
-});
+// Функция для сохранения данных
+function saveProgress() {
+    const progress = {
+        counter: counter,
+        clickMultiplier: clickMultiplier,
+        maxEnergy: maxEnergy,
+        restoreInterval: restoreInterval,
+        upgradeClickPrice: upgradeClickPrice,
+        upgradeEnergyPrice: upgradeEnergyPrice,
+        upgradeRestorePrice: upgradeRestorePrice
+    };
+    localStorage.setItem('clickerProgress', JSON.stringify(progress));
+}
 
-// Закрытие модального окна
-closeModal.addEventListener('click', () => {
-    shopModal.style.display = 'none';
-});
+// Функция для загрузки данных
+function loadProgress() {
+    const savedProgress = localStorage.getItem('clickerProgress');
+    if (savedProgress) {
+        const progress = JSON.parse(savedProgress);
+        counter = progress.counter || 0;
+        clickMultiplier = progress.clickMultiplier || 1;
+        maxEnergy = progress.maxEnergy || 300;
+        restoreInterval = progress.restoreInterval || 1500;
+        upgradeClickPrice = progress.upgradeClickPrice || 50;
+        upgradeEnergyPrice = progress.upgradeEnergyPrice || 50;
+        upgradeRestorePrice = progress.upgradeRestorePrice || 50;
+
+        // Обновляем интерфейс
+        counterElement.textContent = counter;
+        updateEnergy();
+        updateUpgradePrices();
+    }
+}
+
+// Функция для обновления цен в магазине
+function updateUpgradePrices() {
+    upgradeClickPriceElement.textContent = upgradeClickPrice;
+    upgradeEnergyPriceElement.textContent = upgradeEnergyPrice;
+    upgradeRestorePriceElement.textContent = upgradeRestorePrice;
+}
+
+// Загружаем прогресс при загрузке страницы
+loadProgress();
 
 // Покупка улучшения клика
 upgradeClickButton.addEventListener('click', () => {
@@ -100,6 +133,8 @@ upgradeClickButton.addEventListener('click', () => {
         energyCostMultiplier *= 2;
         upgradeClickPrice += 50;
         upgradeClickPriceElement.textContent = upgradeClickPrice;
+
+        saveProgress(); // Сохраняем прогресс
     }
 });
 
@@ -111,7 +146,8 @@ upgradeEnergyButton.addEventListener('click', () => {
         maxEnergy += 60;
         upgradeEnergyPrice += 50;
         upgradeEnergyPriceElement.textContent = upgradeEnergyPrice;
-        updateEnergy();
+
+        saveProgress(); // Сохраняем прогресс
     }
 });
 
@@ -125,5 +161,7 @@ upgradeRestoreButton.addEventListener('click', () => {
         setInterval(restoreEnergy, restoreInterval);
         upgradeRestorePrice += 50;
         upgradeRestorePriceElement.textContent = upgradeRestorePrice;
+
+        saveProgress(); // Сохраняем прогресс
     }
 });
