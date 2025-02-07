@@ -104,7 +104,7 @@ function saveProgress() {
         restoreInterval: restoreInterval, // Сохраняем интервал восстановления
         upgradeClickPrice: upgradeClickPrice,
         upgradeEnergyPrice: upgradeEnergyPrice,
-        upgradeRestorePrice: upgradeRestorePrice
+        upgradeRestorePrice: upgradeRestorePrice,
         energy: energy // Сохраняем текущее значение энергии
     };
     localStorage.setItem('clickerProgress', JSON.stringify(progress));
