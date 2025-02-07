@@ -44,6 +44,9 @@ h1 {
     padding: 0;
     overflow: hidden;
     margin-bottom: 20px;
+    outline: none; /* Убираем синий прямоугольник */
+    -webkit-tap-highlight-color: transparent; /* Убираем подсветку на мобильных устройствах */
+    user-select: none; /* Запрещаем выделение текста */
 }
 
 #clickButton img {
@@ -52,6 +55,7 @@ h1 {
     object-fit: cover;
     border-radius: 50%;
     transition: transform 0.2s ease;
+    user-select: none; /* Запрещаем выделение текста */
 }
 
 #clickButton:hover img {
