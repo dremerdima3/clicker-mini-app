@@ -26,8 +26,11 @@ h1 {
 
 #counter {
     font-size: 2.5rem;
-    margin: 20px 0;
     color: #FF3B30;
+    position: absolute; /* Абсолютное позиционирование */
+    top: 20px; /* Отступ сверху */
+    left: 20px; /* Отступ слева */
+    margin: 0; /* Убираем внешние отступы */
 }
 
 #clickButton {
