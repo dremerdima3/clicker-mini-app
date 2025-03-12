@@ -12,6 +12,35 @@ if (user) {
     console.log("Привет, " + user.first_name + "!");
 }
 
+const binaryBackground = document.querySelector('.binary-background');
+
+function createBinaryStream() {
+  const binaryCode = document.createElement('div');
+  binaryCode.className = 'binary-code';
+  binaryCode.textContent = generateBinaryString();
+  binaryCode.style.left = `${Math.random() * 100}vw`; // Случайное положение по горизонтали
+  binaryCode.style.animationDuration = `${Math.random() * 5 + 3}s`; // Случайная скорость падения
+  binaryBackground.appendChild(binaryCode);
+
+  // Удаляем элемент после завершения анимации
+  setTimeout(() => {
+    binaryCode.remove();
+  }, 10000); // Время должно соответствовать длительности анимации
+}
+
+function generateBinaryString() {
+  let binaryString = '';
+  const length = Math.floor(Math.random() * 50) + 20; // Случайная длина строки
+  for (let i = 0; i < length; i++) {
+    binaryString += Math.random() > 0.5 ? '1' : '0';
+  }
+  return binaryString;
+}
+
+// Создаём новые строки каждые 500 мс
+setInterval(createBinaryStream, 500);
+
+
 // Логика кликера
 let counter = 0;
 let energy = 300;
