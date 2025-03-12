@@ -40,6 +40,11 @@ function generateBinaryString() {
 // Создаём новые строки каждые 500 мс
 setInterval(createBinaryStream, 500);
 
+binaryCode.style.fontSize = `${Math.random() * 20 + 10}px`;
+
+const greens = ['lime', '#00ff00', '#32cd32', '#7cfc00'];
+binaryCode.style.color = greens[Math.floor(Math.random() * greens.length)];
+
 
 // Логика кликера
 let counter = 0;
