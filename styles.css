@@ -13,44 +13,6 @@ body {
     position: relative;
 }
 
-body {
-  margin: 0;
-  overflow: hidden; /* Скрываем скролл */
-  background-color: black; /* Чёрный фон */
-  color: lime; /* Зелёный цвет текста */
-  font-family: monospace; /* Моноширинный шрифт для эффекта кода */
-}
-
-.binary-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: -1; /* Фон должен быть позади основного контента */
-}
-
-.binary-code {
-  position: absolute;
-  white-space: nowrap;
-  font-size: 16px;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(100vh);
-  }
-}
-
-.binary-code {
-  opacity: 0.7;
-}
-
 .container {
     text-align: center;
     width: 90%;
@@ -78,74 +40,37 @@ button {
     outline: none; /* Убираем outline при фокусе */
 }
 
-/* Основные стили для кнопки */
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Центрируем кнопку по вертикали */
+#clickButton {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
 }
 
-.star-button {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, #1a1a1a, #000000); /* Объёмный эффект */
-  border: none;
-  box-shadow: 
-    5px 5px 10px #000000, 
-    -5px -5px 10px #333333, 
-    inset 3px 3px 5px #000000, 
-    inset -3px -3px 5px #333333; /* Тени для объёма */
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out;
+#clickButton img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
 }
 
-/* Звезда в центре */
-.star {
-  width: 60px;
-  height: 60px;
-  background: #00ff00; /* Неоново-зелёный */
-  clip-path: polygon(
-    50% 0%, 
-    61% 35%, 
-    98% 35%, 
-    68% 57%, 
-    79% 91%, 
-    50% 70%, 
-    21% 91%, 
-    32% 57%, 
-    2% 35%, 
-    39% 35%
-  ); /* Шестигранная звезда */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: background 0.2s ease-in-out;
+#clickButton:hover img {
+    transform: scale(1.05);
 }
 
-/* Анимация при нажатии */
-.star-button:active {
-  transform: scale(0.95) rotate(180deg); /* Уменьшение и вращение */
-  box-shadow: 
-    2px 2px 5px #000000, 
-    -2px -2px 5px #333333, 
-    inset 1px 1px 3px #000000, 
-    inset -1px -1px 3px #333333;
+#clickButton:active img {
+    transform: scale(0.95);
 }
 
-.star-button:active .star {
-  background: #39ff14; /* Изменение цвета звезды при нажатии */
-}
-.star-button:hover {
-  box-shadow: 
-    0 0 10px #00ff00, 
-    0 0 20px #00ff00, 
-    5px 5px 10px #000000, 
-    -5px -5px 10px #333333;
+#clickButton:disabled img {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .energy-bar {
